@@ -1,0 +1,35 @@
+.BlockMain{
+    width: 100%;
+    height: 100vh;
+    position: relative;
+
+    .field{
+        width: 550px;
+        height: 550px;
+        background-color: rgb(80, 174, 79);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        padding: 20px;
+        transform: translate(-50%,-50%);
+        
+
+        .fieldCover{
+            width: 100%;
+            height: 100%;
+
+            .displayFlex{
+                display: flex;
+
+                $item-size: 85px;
+                .item{
+                    width: $item-size;
+                    height: $item-size;
+                    line-height: $item-size;
+                    text-align: center;
+                    background-color: rgb(255, 255, 255);
+                }
+            }
+        }
+    }
+}
