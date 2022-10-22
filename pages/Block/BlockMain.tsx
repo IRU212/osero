@@ -1,4 +1,4 @@
-import React, { KeyboardEvent, useEffect, useRef } from 'react'
+import React, { KeyboardEvent, useEffect, useRef, useState } from 'react'
 import styles from '../../styles/block.module.scss'
 
 function BlockMain() {
@@ -22,6 +22,11 @@ function BlockMain() {
         [N,N,N,N,N,N],
     ];
 
+    const [dataTables,setDataTables] = useState<(number|null)[][]>(tables)
+
+    function Test(): any{
+
+    }
     
     return (
         <div className={styles.BlockMain}>
@@ -29,7 +34,7 @@ function BlockMain() {
                 <div className={styles.fieldCover}>
                     <div>
                         {/* アルファベットごとに分ける */}
-                        { tables.map((datas,listIndex) =>
+                        { dataTables.map((datas,listIndex) =>
 
                             <div key={listIndex} className={styles.displayFlex}>
 
@@ -38,17 +43,25 @@ function BlockMain() {
 
                                     // 要素のitemを取得(例:A1)
                                     const ClickItem = () => {
-                                        const text = document.getElementById(`itemText + ${listIndex} + ${index}`)?.innerText
                                         
-                                        const itemPosition : null|number = tables[listIndex][index]
-                                        datas.splice(index,1,W)
-                                        console.log(datas)
+                                        // クリックしたら要素をnullから変更
+                                        setDataTables((prevState) => [...prevState,datas.splice(index,1,W)])
+                                        
+                                        console.log(dataTables)
                                     }
 
                                     // 要素のitemを表示
                                     return(
-                                        <div key={index} id={`itemText + ${listIndex} + ${index}`} onClick={ClickItem} className={styles.item}>
-                                            { data }
+                                        <div key={index}>
+                                            { listIndex < 6 ?
+                                                <div id={`itemText + ${listIndex} + ${index}`} onClick={ClickItem} className={styles.item}>
+                                                    { data }
+                                                </div>
+                                                :
+                                                <div style={{display: 'none'}}>
+
+                                                </div>
+                                            }
                                         </div>
                                     )
                                 }
