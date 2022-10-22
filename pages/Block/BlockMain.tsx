@@ -3,37 +3,55 @@ import styles from '../../styles/block.module.scss'
 
 function BlockMain() {
 
+    // 縦列をアルファベット,横を数字とする
+    // オセロの白をW 黒をBとする ない状態をN
+    const N: null =  null
+    const B: number = 0
+    const W: number = 1
+
+    // 上の状態Sに代入する
+    // 開始時はC3,D4をW C4,D3をBとする
+
     // オセロの位置
-    const tables: string[][] = [
-        ['A1','A2','A3','A4','A5','A6'],
-        ['B1','B2','B3','B4','B5','B6'],
-        ['C1','C2','C3','C4','C5','C6'],
-        ['D1','D2','D3','D4','D5','D6'],
-        ['E1','E2','E3','E4','E5','E6'],
-        ['F1','F2','F3','F4','F5','F6'],
+    const tables: (number|null)[][] = [
+        [N,N,N,N,N,N],
+        [N,N,N,N,N,N],
+        [N,N,B,W,N,N],
+        [N,N,W,B,N,N],
+        [N,N,N,N,N,N],
+        [N,N,N,N,N,N],
     ];
 
-    // const aaa: any = function Table(){
-    //     for (let index = 0; index < tables.length; index++) {
-    //         const elements = tables[index];
-    //         for (let index = 0; index < elements.length; index++) {
-    //             const element = elements[index];
-    //             return element
-    //         }
-    //     }
-    // }
-
+    
     return (
         <div className={styles.BlockMain}>
             <div className={styles.field}>
                 <div className={styles.fieldCover}>
                     <div>
-                        { tables.map((datas,index) => 
-                            <div key={index} className={styles.displayFlex}>
-                                { datas.map((data,index) => 
-                                    <div key={index} className={styles.item}>
-                                        { data }
-                                    </div>
+                        {/* アルファベットごとに分ける */}
+                        { tables.map((datas,listIndex) =>
+
+                            <div key={listIndex} className={styles.displayFlex}>
+
+                                {/* アルファベットごとに分ける */}
+                                { datas.map((data,index) => {
+
+                                    // 要素のitemを取得(例:A1)
+                                    const ClickItem = () => {
+                                        const text = document.getElementById(`itemText + ${listIndex} + ${index}`)?.innerText
+                                        
+                                        const itemPosition : null|number = tables[listIndex][index]
+                                        datas.splice(index,1,W)
+                                        console.log(datas)
+                                    }
+
+                                    // 要素のitemを表示
+                                    return(
+                                        <div key={index} id={`itemText + ${listIndex} + ${index}`} onClick={ClickItem} className={styles.item}>
+                                            { data }
+                                        </div>
+                                    )
+                                }
                                 ) }
                             </div>
                         ) }
