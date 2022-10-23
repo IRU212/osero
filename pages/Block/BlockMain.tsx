@@ -24,12 +24,46 @@ function BlockMain() {
 
     const [dataTables,setDataTables] = useState<(number|null)[][]>(tables)
 
-    function Test(): any{
+    // console.log(dataTables)
 
-    }
-    
+    const BPositionList: number[] = []
+    const WPositionList: number[] = []
+
+    dataTables.forEach(function(items,indexItem){
+        if (indexItem < 6) {
+            
+            const data: any[] = ['A','B','C','D','E']
+            
+            // Bのコマ位置取得
+            items.filter((item,index) =>{
+                if (item == B) {
+                    BPositionList.push(data[indexItem] + index)
+                }
+            })
+
+            // Wのコマ位置取得
+            items.filter((item,index) =>{
+                if (item == W) {
+                    WPositionList.push(data[indexItem] + index)
+                }
+            })
+
+
+        }
+    });
+
+    // console.log("Bの" + BPositionList)
+    // console.log("Wの" + WPositionList)
+
+    // スタートするこまをB
+    const [start,setStart] = useState<number>(B)
+
     return (
         <div className={styles.BlockMain}>
+            <div>
+                <div>先行:0</div>
+                <div>後攻:1</div>
+            </div>
             <div className={styles.field}>
                 <div className={styles.fieldCover}>
                     <div>
@@ -43,9 +77,27 @@ function BlockMain() {
 
                                     // 要素のitemを取得(例:A1)
                                     const ClickItem = () => {
+
+                                        console.log(datas[index])
+
+                                        // コマが置けるか判定
+                                        if (datas[index] == null) {
+                                            
+                                            // コマをうった際にコマを入れ替え
+                                            if (start == W) {
+                                                setStart(B)
+                                            } else {
+                                                setStart(W)
+                                            }
+                                            
+                                            // クリックしたら要素をnullから変更
+                                            setDataTables((prevState) => [...prevState,datas.splice(index,1,start)])
                                         
-                                        // クリックしたら要素をnullから変更
-                                        setDataTables((prevState) => [...prevState,datas.splice(index,1,W)])
+                                        } else {
+
+                                            console.log("おけません")
+
+                                        }
                                         
                                         console.log(dataTables)
                                     }
