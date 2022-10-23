@@ -16,7 +16,7 @@ function BlockMain() {
     const tables: (number|null)[][] = [
         [N,N,N,N,N,N],
         [N,N,N,N,N,N],
-        [N,N,B,W,N,N],
+        [N,N,B,B,W,N],
         [N,N,W,B,N,N],
         [N,N,N,N,N,N],
         [N,N,N,N,N,N],
@@ -64,6 +64,9 @@ function BlockMain() {
                 <div>先行:0</div>
                 <div>後攻:1</div>
             </div>
+            <div>
+                今のターン:{start}
+            </div>
             <div className={styles.field}>
                 <div className={styles.fieldCover}>
                     <div>
@@ -86,6 +89,87 @@ function BlockMain() {
                                             // コマをうった際にコマを入れ替え
                                             if (start == W) {
                                                 setStart(B)
+
+                                                // コマの隣があるか判定
+                                                console.log(dataTables[listIndex][index])
+
+                                                // 置いたコマの右にあるか判定
+                                                if (dataTables[listIndex][index + 1] == B) {
+                                                    // 置いたコマの右にあるか判定 
+                                                    if(dataTables[listIndex][index + 2] == start){
+
+                                                        // 間のコマの色を変える
+                                                        setDataTables((prevState) => [...prevState,datas.splice(index + 1,1,start)])
+                                                    
+                                                    } else if(dataTables[listIndex][index + 2] == B){
+
+                                                        // 間のコマの色を変える
+                                                        setDataTables((prevState) => [...prevState,datas.splice(index + 1,1,start)])
+                                                        setDataTables((prevState) => [...prevState,datas.splice(index + 2,1,start)])
+
+                                                        if(dataTables[listIndex][index + 3] == B){
+
+                                                            // 間のコマの色を変える
+                                                            setDataTables((prevState) => [...prevState,datas.splice(index + 3,1,start)])
+
+                                                            if(dataTables[listIndex][index + 4] == B){
+
+                                                                // 間のコマの色を変える
+                                                                setDataTables((prevState) => [...prevState,datas.splice(index + 3,1,start)])
+                                                            }
+                                                        }
+
+                                                    }
+                                                }
+
+                                                // 置いたコマの左にあるか判定
+                                                if (dataTables[listIndex][index - 1] == B) {
+                                                    // 置いたコマの右にあるか判定 
+                                                    if(dataTables[listIndex][index - 2] == start){
+
+                                                        // 間のコマの色を変える
+                                                        setDataTables((prevState) => [...prevState,datas.splice(index - 1,1,start)])
+                                                    
+                                                    } else if(dataTables[listIndex][index - 2] == B){
+                                                        
+                                                    }
+                                                }
+
+                                                // 置いたコマの上にあるか判定
+                                                if (dataTables[listIndex - 1][index] == B) {
+                                                    console.log("あります")
+                                                    // 置いたコマの上にあるか判定 
+                                                    if(dataTables[listIndex - 2][index] == start){
+
+                                                        // 間のコマの色を変える
+                                                        setDataTables((prevState) => [...prevState,dataTables[listIndex - 1].splice(index,1,start)])
+                                                    
+                                                    } else if(dataTables[listIndex - 2][index] == B){
+                                                        
+                                                    }
+                                                }
+
+                                                // 置いたコマの下にあるか判定
+                                                if (dataTables[listIndex + 1][index] == B) {
+                                                console.log("あります")
+                                                // 置いたコマの下にあるか判定 
+                                                if(dataTables[listIndex + 2][index] == start){
+
+                                                    // 間のコマの色を変える
+                                                    setDataTables((prevState) => [...prevState,dataTables[listIndex + 1].splice(index,1,start)])
+                                                
+                                                } else if(dataTables[listIndex + 2][index] == B){
+                                                    
+                                                }
+                                            }
+
+                                                console.log(dataTables[listIndex][index + 3])
+
+                                                // コマの左にあるか判定
+                                                if (dataTables[listIndex][index - 1] == B) {
+                                                    console.log(B + "が左にあります")
+                                                }
+
                                             } else {
                                                 setStart(W)
                                             }
